@@ -148,3 +148,16 @@ resource "aws_cloudwatch_log_stream" "prod_backend_web" {
   name           = "prod-backend-web"
   log_group_name = aws_cloudwatch_log_group.prod_backend.name
 }
+
+
+#import VPC module
+ module "VPC" {
+  source = "./networking"
+  
+ }
+
+ #import RDS
+ module "RDS" {
+  source = "./database"
+  
+ }
