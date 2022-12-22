@@ -1,13 +1,14 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.0"
-    }
-  }
-
+module "ECS" {
+  source = ". ./modules/application"
+  
 }
 
-provider "aws" {
-  region  = s3_region
+module "VPC" {
+  source = ". ./modules/networking"
+  
+}
+
+module "RDS" {
+  source = ". ./modules/database"
+  
 }
