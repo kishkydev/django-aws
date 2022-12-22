@@ -9,5 +9,5 @@ terraform {
 }
 
 provider "aws" {
-  region  = s3_region
+  region  = var.region
 }

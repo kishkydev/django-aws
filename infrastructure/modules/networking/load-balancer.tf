@@ -2,8 +2,8 @@
 resource "aws_alb" "alb" {
   name            = "my-alb"
   internal        = false
-  security_groups = ["sg-123456"]
-  subnets         = ["subnet-123456", "subnet-789012"]
+  security_groups = [aws_security_group.alb.id]
+  subnets         = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id, aws_subnet.public_subnet_3.id]
 
   tags = {
     Name = "my-alb"
@@ -20,9 +20,9 @@ resource "aws_alb_target_group" "alb_target_group" {
   health_check {
     path                = "/health"
     interval            = 30
-    timeout             = 5
+    timeout             = 29
     healthy_threshold   = 2
-    unhealthy_threshold = 2
+    unhealthy_threshold = 5
   }
 }
 
@@ -39,10 +39,10 @@ resource "aws_alb_listener" "alb_listener" {
 }
 
 # Allow traffic from 80 and 443 ports only
-resource "aws_security_group" "prod_lb" {
-  name        = "prod-lb"
+resource "aws_security_group" "alb" {
+  name        = "alb"
   description = "Controls access to the ALB"
-  vpc_id      = aws_vpc.prod.id
+  vpc_id      = aws_vpc.vpc.id
 
   ingress {
     from_port   = 80
@@ -64,4 +64,11 @@ resource "aws_security_group" "prod_lb" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+}
+
+
+#Output ALB URL
+
+output "alb_domain" {
+  value = aws_lb.alb.dns_name
 }
