@@ -151,13 +151,13 @@ resource "aws_cloudwatch_log_stream" "prod_backend_web" {
 
 
 #import VPC module
- module "VPC" {
-  source = ". ./networking"
+ module "networking" {
+  source = "../..modules/networking"
   
  }
 
  #import RDS
- module "RDS" {
-  source = ". ./database"
+ module "database" {
+  source = "../../modules/database"
   
  }

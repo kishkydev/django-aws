@@ -1,14 +1,14 @@
-module "ECS" {
-  source = ". ./modules/application"
+module "application" {
+  source = "./modules/application"
   
 }
 
-module "VPC" {
-  source = ". ./modules/networking"
+module "networking" {
+  source = "./modules/networking"
   
 }
 
-module "RDS" {
+module "database" {
   source = ". ./modules/database"
   
 }
