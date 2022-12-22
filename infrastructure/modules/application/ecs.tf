@@ -156,8 +156,8 @@ resource "aws_cloudwatch_log_stream" "prod_backend_web" {
   
  }
 
- #import RDS
- module "database" {
-  source = "../../modules/database"
-  
- }
+#  #import RDS
+#  module "database" {
+#   source       = "../../modules/database"
+#   rds_password =   
+#  }

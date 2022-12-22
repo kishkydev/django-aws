@@ -13,7 +13,7 @@ variable "rds_username" {
   default     = "django_aws"
 }
 variable "rds_password" {
-  description = "postgres password for production DB"
+  description = "postgres password for database instance"
 }
 variable "rds_instance_class" {
   description = "RDS instance type"
