@@ -9,5 +9,6 @@ terraform {
 }
 
 provider "aws" {
+  alias = "application"
   region  = var.region
 }

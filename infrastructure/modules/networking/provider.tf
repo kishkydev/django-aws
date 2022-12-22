@@ -9,5 +9,6 @@ terraform {
 }
 
 provider "aws" {
+  alias   = "networking"
   region  = var.region
 }
