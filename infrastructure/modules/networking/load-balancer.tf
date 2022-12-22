@@ -70,5 +70,5 @@ resource "aws_security_group" "alb" {
 #Output ALB URL
 
 output "alb_domain" {
-  value = aws_lb.alb.dns_name
+  value = aws_alb.alb.dns_name
 }

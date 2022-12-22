@@ -2,7 +2,7 @@
 resource "aws_appautoscaling_target" "ecs_auto_scaling_group" {
   max_capacity = 10
   min_capacity = 1
-  resource_id = "service/${aws_ecs_cluster.ecs_cluster.name}/${aws_ecs_service.ecs_service.name}"
+  resource_id = "service/${module.application.aws_ecs_cluster.ecs_cluster.name}/${module.application.aws_ecs_service.ecs_service.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace = "ecs"
 }
@@ -21,4 +21,9 @@ resource "aws_appautoscaling_policy" "ecs_scaling_policy" {
     disable_scale_in = false
   }
 depends_on = [aws_appautoscaling_target.ecs_auto_scaling_group]
+}
+
+module "application" {
+  source = "../../modules/appliucation"
+  
 }
