@@ -23,7 +23,8 @@ resource "aws_appautoscaling_policy" "ecs_scaling_policy" {
 depends_on = [aws_appautoscaling_target.ecs_auto_scaling_group]
 }
 
+#import application module
 module "application" {
-  source = "../../modules/appliucation"
+  source = "../../modules/application"
   
 }
