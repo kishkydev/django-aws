@@ -19,3 +19,24 @@ variable "password" {
   description = "Postgres password for database instance"
   default     = "myDBpassworD"
 }
+
+#Route53
+# Namecheap
+variable "api_username" {
+  description = "Namecheap APIUsername"
+  default = "Obatula"
+}
+variable "api_key" {
+  description = "Namecheap APIKey"
+  default     = "1234place567holder"
+}
+
+# Domains
+variable "domain" {
+  description = "Base domain for django project"
+  default = "example53.xyz"
+}
+variable "backend" {
+  description = "Backend web domain for django project"
+  default = "api.example53.xyz"
+}

@@ -17,6 +17,10 @@ module "application" {
 
 module "networking" {
   source = "../modules/networking"
+  namecheap_api_username = var.api_username
+  namecheap_api_key = var.api_key
+  base_domain = var.domain
+  backend_domain = var.backend
 
   ecs_cluster_name = module.application.ecs_cluster_name
   ecs_service_name = module.application.ecs_service_name

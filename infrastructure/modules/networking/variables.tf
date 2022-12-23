@@ -20,19 +20,15 @@ variable "ecs_service_name" {
 # Namecheap
 variable "namecheap_api_username" {
   description = "Namecheap APIUsername"
-  default = "Obatula"
 }
 variable "namecheap_api_key" {
   description = "Namecheap APIKey"
-  default     = "1234place567holder"
 }
 
 # Domains
 variable "base_domain" {
   description = "Base domain for django project"
-  default = "example53.xyz"
 }
 variable "backend_domain" {
   description = "Backend web domain for django project"
-  default = "api.example53.xyz"
 }
