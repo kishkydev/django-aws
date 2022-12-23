@@ -45,18 +45,3 @@ resource "aws_db_subnet_group" "rds_subnet_group" {
   subnet_ids = var.subnet_ids
   description = "Subnet group for RDS database"
 }
-
-
-
-#Outputs
-output "rds_db_name" {
-  value = aws_db_instance.rds_database.db_name
-}
-
-output "rds_username" {
-  value = aws_db_instance.rds_database.username
-}
-
-output "rds_password" {
-  value = aws_db_instance.rds_database.password
-}

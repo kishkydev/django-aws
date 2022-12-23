@@ -38,7 +38,7 @@ variable "alb_target_arn" {
 }
 
 #Network
-variable "subnet" {
+variable "subnets" {
   description = "ECS subnets"
 }
 

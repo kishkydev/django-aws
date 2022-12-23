@@ -65,10 +65,3 @@ resource "aws_security_group" "alb" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-
-
-#Output ALB URL
-
-output "alb_domain" {
-  value = aws_alb.alb.dns_name
-}
