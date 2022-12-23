@@ -10,11 +10,9 @@ variable "rds_db_name" {
 }
 variable "rds_username" {
   description = "RDS database username"
-  default     = "django_aws"
 }
 variable "rds_password" {
   description = "postgres password for database instance"
-  default     = "myDBpassworD"
 }
 variable "rds_instance_class" {
   description = "RDS instance type"

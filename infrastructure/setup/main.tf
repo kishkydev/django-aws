@@ -24,7 +24,9 @@ module "networking" {
 }
 
 module "database" {
-  source = "../modules/database"
+  source        = "../modules/database"
+  rds_username  = var.username
+  rds_password  = var.password
 
   subnet_ids = module.networking.public_subnets
   vpc_id = module.networking.vpc_id
