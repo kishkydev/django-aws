@@ -26,17 +26,39 @@ resource "aws_alb_target_group" "alb_target_group" {
   }
 }
 
-# Create a listener for the ALB
-resource "aws_alb_listener" "alb_listener" {
-  load_balancer_arn = aws_alb.alb.arn
+# Target listener for http:80
+resource "aws_lb_listener" "prod_http" {
+  load_balancer_arn = aws_alb.alb.id
   port              = "80"
   protocol          = "HTTP"
+  depends_on        = [aws_alb_target_group.alb_target_group]
 
   default_action {
-    target_group_arn = aws_alb_target_group.alb_target_group.arn
-    type             = "forward"
+    type = "redirect"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
   }
 }
+
+# Target listener for https:443
+resource "aws_alb_listener" "prod_https" {
+  load_balancer_arn = aws_alb.alb.id
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  depends_on        = [aws_alb_target_group.alb_target_group]
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_alb_target_group.alb_target_group.arn
+  }
+
+  certificate_arn = aws_acm_certificate_validation.backend.certificate_arn
+}
+
 
 # Allow traffic from 80 and 443 ports only
 resource "aws_security_group" "alb" {
