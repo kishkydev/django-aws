@@ -48,5 +48,5 @@ variable "vpc_id" {
 }
 
 variable "security_groups" {
-  description = "VPC security groups"
+  description = "ALB security groups"
 }
