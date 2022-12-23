@@ -48,8 +48,8 @@ resource "aws_db_subnet_group" "rds_subnet_group" {
 }
 
 
-#import networking module
-module "networking" {
-  source = "../../modules/networking"
+# #import networking module
+# module "networking" {
+#   source = "../../modules/networking"
   
-}
+# }
