@@ -8,7 +8,7 @@ module "networking" {
   
 }
 
-# module "database" {
-#   source = "../modules/database"
+module "database" {
+  source = "../modules/database"
   
-# }
+}
