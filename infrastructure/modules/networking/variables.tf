@@ -1,11 +1,11 @@
 variable "region" {
   description = "The AWS region to create resources in."
-  default     = "us-east-1"
+  default     = "us-west"
 }
 
 variable "availability_zones" {
   description = "Availability zones"
-  default     = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  default     = ["us-west-2a", "us-west-2b", "us-west-2c"]
 }
 
 variable "ecs_cluster_name" {
