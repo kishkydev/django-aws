@@ -20,3 +20,32 @@ variable "rds_instance_class" {
   description = "RDS instance type"
   default     = "db.t2.micro"
 }
+
+#Netorking
+variable "vpc_id" {
+  description = "VPC ID"
+}
+
+variable "security_groups" {
+  description = "ECS security groups"
+}
+
+variable "subnet_ids" {
+  description = "VPC subnet IDs"
+}
+
+#database
+variable "storage_type" {
+  description = "RDS storage type"
+  default = "gp2"
+}
+
+variable "allocated_storage" {
+  description = "RDS allocated storage"
+  default = 20
+}
+
+variable "engine_version" {
+  description = "Postgres engine version"
+  default     = "12.5"
+}

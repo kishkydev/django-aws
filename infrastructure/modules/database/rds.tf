@@ -1,19 +1,19 @@
 # Configure the AWS provider
 provider "aws" {
-  region = "us-east-1"
+  region = var.region
 }
 
 # Create an RDS security group that allows traffic from the ECS cluster
 resource "aws_security_group" "rds_security_group" {
   name        = "rds_security_group"
   description = "Security group for RDS database"
-  vpc_id      = module.networking.aws_vpc.vpc.id
+  vpc_id      = var.vpc_id
 
   ingress {
-    from_port   = 5432
+    from_port   = 54322
     to_port     = 5432
     protocol    = "tcp"
-    security_groups = aws_security_group.ecs_security_group.id
+    security_groups = var.security_groups
   }
 
   egress {
@@ -26,15 +26,14 @@ resource "aws_security_group" "rds_security_group" {
 
 # Create an RDS PostgreSQL database
 resource "aws_db_instance" "rds_database" {
-  allocated_storage    = 20
-  storage_type         = "gp2"
+  allocated_storage    = var.allocated_storage
+  storage_type         = var.storage_type
   engine               = "postgres"
-  engine_version       = "12.5"
+  engine_version       = var.engine_version
   instance_class       = var.rds_instance_class
   name                 = var.rds_db_name
   username             = var.rds_username
   password             = var.rds_password
-  # vpc_id               = module.networking.aws_vpc.vpc.id
   vpc_security_group_ids   = [aws_security_group.rds_security_group.id]
   db_subnet_group_name    = aws_db_subnet_group.rds_subnet_group.name
   publicly_accessible  = false
@@ -43,13 +42,21 @@ resource "aws_db_instance" "rds_database" {
 # Create an RDS subnet group
 resource "aws_db_subnet_group" "rds_subnet_group" {
   name       = "rds_subnet_group"
-  subnet_ids = [module.networking.aws_subnet.public_subnet_1.id, module.networking.aws_subnet.public_subnet_2.id, module.networking.aws_subnet.public_subnet_3.id]
+  subnet_ids = var.subnet_ids
   description = "Subnet group for RDS database"
 }
 
 
-# #import networking module
-# module "networking" {
-#   source = "../../modules/networking"
-  
-# }
+
+#Outputs
+output "rds_db_name" {
+  value = aws_db_instance.rds_database.db_name
+}
+
+output "rds_username" {
+  value = aws_db_instance.rds_database.username
+}
+
+output "rds_password" {
+  value = aws_db_instance.rds_database.password
+}

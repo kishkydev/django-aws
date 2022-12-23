@@ -1,6 +1,6 @@
 # ECS cluster
 resource "aws_ecs_cluster" "ecs_cluster" {
-  name = "ecs"
+  name = var.ecs_cluster_name
 }
 
 # Backend web task definition and service
@@ -24,7 +24,7 @@ resource "aws_ecs_task_definition" "backend_web" {
       rds_db_name  = var.rds_db_name
       rds_username = var.rds_username
       rds_password = var.rds_password
-      rds_hostname = module.database.aws_db_instance.rds_database.address
+      rds_hostname = var.rds_hostname
     },
   )
   execution_role_arn = aws_iam_role.ecs_task_execution.arn
@@ -43,14 +43,14 @@ resource "aws_ecs_service" "ecs_service" {
   enable_execute_command             = true
 
   load_balancer {
-    target_group_arn = aws_alb_target_group.alb_target_group.arn
+    target_group_arn = var.alb_target_arn
     container_name   = "backend-web"
     container_port   = 8000
   }
 
   network_configuration {
     security_groups  = [aws_security_group.ecs_backend.id]
-    subnets          = [module.networking.aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id, aws_subnet.private_subnet_3.id]
+    subnets          = var.subnets
     assign_public_ip = false
   }
 }
@@ -58,13 +58,13 @@ resource "aws_ecs_service" "ecs_service" {
 # Security Group
 resource "aws_security_group" "ecs_backend" {
   name        = "ecs-backend"
-  vpc_id      = module.networking.aws_vpc.vpc.id
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port       = 0
     to_port         = 0
     protocol        = "-1"
-    security_groups = [module.networking.aws_security_group.alb.id]
+    security_groups = var.security_groups
   }
 
   egress {
@@ -148,16 +148,3 @@ resource "aws_cloudwatch_log_stream" "backend_web" {
   name           = "ecs-backend-web"
   log_group_name = aws_cloudwatch_log_group.backend.name
 }
-
-
-# #import VPC module
-#  module "networking" {
-#   source = "../../modules/networking"
-  
-#  }
-
-#  #import RDS
-#  module "database" {
-#   source       = "../../modules/database"
-
-#  }
