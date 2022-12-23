@@ -20,9 +20,11 @@ variable "ecs_service_name" {
 # Namecheap
 variable "namecheap_api_username" {
   description = "Namecheap APIUsername"
+  default = "Obatula"
 }
 variable "namecheap_api_key" {
   description = "Namecheap APIKey"
+  default     = "1234place567holder"
 }
 
 # Domains
