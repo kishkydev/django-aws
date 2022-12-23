@@ -9,7 +9,7 @@ module "application" {
   
   alb_target_arn = module.networking.aws_alb_target_group.alb_target_group.arn
 
-  subnets = [module.networking.aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id, aws_subnet.private_subnet_3.id]
+  subnet = [module.networking.aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id, aws_subnet.private_subnet_3.id]
 
   vpc_id = module.networking.aws_vpc.vpc.id
   security_groups = [module.networking.aws_security_group.alb.id]
