@@ -7,5 +7,5 @@ output "ecs_service_name" {
 }
 
 output "ecs_security_groups" {
-    value = [aws_security_group.ecs_security_group.id]
+    value = [aws_security_group.ecs_backend.id]
 }
