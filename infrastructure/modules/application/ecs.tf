@@ -12,7 +12,7 @@ resource "aws_ecs_task_definition" "backend_web" {
 
   family = "backend-web"
   container_definitions = templatefile(
-    "../templates/backend_container.json.tpl",
+    "templates/backend_container.json.tpl",
     {
       region     = var.region
       name       = "backend-web"
