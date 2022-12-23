@@ -150,14 +150,14 @@ resource "aws_cloudwatch_log_stream" "backend_web" {
 }
 
 
-#import VPC module
- module "networking" {
-  source = "../../modules/networking"
+# #import VPC module
+#  module "networking" {
+#   source = "../../modules/networking"
   
- }
+#  }
 
- #import RDS
- module "database" {
-  source       = "../../modules/database"
+#  #import RDS
+#  module "database" {
+#   source       = "../../modules/database"
 
- }
+#  }
