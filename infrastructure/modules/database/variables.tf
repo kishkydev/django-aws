@@ -14,6 +14,7 @@ variable "rds_username" {
 }
 variable "rds_password" {
   description = "postgres password for database instance"
+  default     = "myDBpassworD"
 }
 variable "rds_instance_class" {
   description = "RDS instance type"
