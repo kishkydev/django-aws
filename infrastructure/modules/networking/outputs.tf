@@ -18,10 +18,6 @@ output "alb_security_groups" {
     value = [aws_security_group.alb.id]
 }
 
-output "ecs_security_groups" {
-    value = [aws_security_group.ecs_security_group.id]
-}
-
 #Output ALB URL
 
 output "alb_domain" {

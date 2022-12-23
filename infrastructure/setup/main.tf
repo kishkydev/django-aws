@@ -28,6 +28,6 @@ module "database" {
 
   subnet_ids = module.networking.public_subnets
   vpc_id = module.networking.vpc_id
-  security_groups = module.networking.ecs_security_groups
+  security_groups = module.application.ecs_security_groups
   
 }
