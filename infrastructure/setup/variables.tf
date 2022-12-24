@@ -1,6 +1,6 @@
 variable "region" {
-  description = "The AWS region to create resources in."
-  default     = "us-east-1"
+  description = "The AWS region to create resources in"
+  default     = "us-west-2"
 }
 
 variable "project_name" {

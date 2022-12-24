@@ -1,6 +1,6 @@
 variable "region" {
   description = "The AWS region to create resources in."
-  default     = "us-west"
+  default     = "us-west-2"
 }
 
 # rds
