@@ -11,25 +11,40 @@ resource "aws_ecs_task_definition" "backend_web" {
   memory                   = 512
 
   family = "backend-web"
-  container_definitions = templatefile(
-    "templates/backend_container.json.tpl",
+  container_definitions = "${jsonencode([
     {
-      region     = var.region
-      name       = "backend-web"
-      image      = aws_ecr_repository.backend.repository_url
-      command    = ["gunicorn", "-w", "3", "-b", ":8000", "django_aws.wsgi:application"]
-      log_group  = aws_cloudwatch_log_group.backend.name
-      log_stream = aws_cloudwatch_log_stream.backend_web.name
-
-      rds_db_name  = var.rds_db_name
-      rds_username = var.rds_username
-      rds_password = var.rds_password
-      rds_hostname = var.rds_hostname
-    },
-  )
+      "name": "backend-web",
+      "image": "${aws_ecr_repository.backend.repository_url}",
+      "essential": true,
+      "links": [],
+      "portMappings": [
+        {
+          "containerPort": 8000,
+          "hostPort": 8000,
+          "protocol": "tcp"
+        }
+      ],
+      "command": ["gunicorn", "-w", "3", "-b", ":8000", "django_aws.wsgi:application"],
+      "environment": [
+        {
+          "name": "DATABASE_URL",
+          "value": "postgresql://${var.rds_username}:${var.rds_password}@${var.rds_hostname}:5432/${var.rds_db_name}"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "${aws_cloudwatch_log_group.backend.name}",
+          "awslogs-region": "${var.region}",
+          "awslogs-stream-prefix": "${aws_cloudwatch_log_stream.backend_web.name}"
+        }
+      }
+    }
+  ])}"
   execution_role_arn = aws_iam_role.ecs_task_execution.arn
   task_role_arn      = aws_iam_role.backend_task.arn
 }
+
 
 resource "aws_ecs_service" "ecs_service" {
   name                               = "backend-web"
